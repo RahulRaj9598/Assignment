@@ -1,58 +1,97 @@
-# Activity Booking API
+# 🎯 Activity Booking API
 
-This is a RESTful API for managing user registrations, activity listings, and bookings. The API is built using Node.js, Express, and MongoDB.
+A backend RESTful API for user registration, login, listing activities, and booking them. Built using **Node.js**, **Express**, **MongoDB**, **JWT**, and **bcrypt** for MeetX internship assignment.
 
-## Features
+---
 
-- **User Authentication**: Register and login functionality with JWT-based authentication.
-- **Activity Management**: Create and list activities with details like title, description, location, and date/time.
-- **Booking System**: Book activities and view user-specific bookings.
+## 🚀 Features
 
-## Prerequisites
+- User Registration & Login with JWT authentication
+- Public endpoint to list available activities
+- Authenticated activity booking
+- View your own bookings
+- Input validation with `express-validator`
+- Clean MVC-based code structure
 
-- Node.js (v14 or higher)
-- MongoDB (local or cloud instance)
+---
 
-## Installation
+## ⚙️ Local Installation
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd intern
-2. Install dependencies
-    npm install
-3. Create a .env file in the root directory and add the following:
-   PORT=5000
-   MONGO_URI=mongodb://localhost:27017/activity-booking
-   JWT_SECRET=your_jwt_secret
+1. First, ensure you have **Node.js** and **MongoDB** installed on your machine.
+2. Clone this repository to your local system.
+3. Navigate to the project directory in your terminal.
+4. Run `npm install` to install all the required dependencies.
+5. Create a `.env` file in the project root and add the following:
+   - PORT=5000
+   - MONGO_URI=mongodb://localhost:27017/activity-booking
+   - JWT_SECRET=your_jwt_secret
+6. Make sure your MongoDB server is running (`mongod` command if you're using local).
+7. Start the server by running `npm start`.
+8. The API will be available locally at `http://localhost:5000`.
 
-4. start the server
-   npm start
+---
 
-Authentication
-POST /api/auth/register
-Register a new user.
-Body: { name, email, phone, password }
+## 📮 API Endpoints
 
-POST /api/auth/login
-Login and receive a JWT token.
-Body: { email, password }
+### 🔐 Authentication
 
-Activities
-POST /api/activities
-Create a new activity.
-Body: { title, description, location, dateTime }
-Validation: Title, description (min 10 chars), location, and valid ISO date required.
+- **POST** `/api/auth/register`  
+  Registers a new user.  
+  Requires `name`, `email`, `phone`, and `password` in the body.
 
-GET /api/activities
-List all activities.
+- **POST** `/api/auth/login`  
+  Logs in a user and returns a JWT token.  
+  Requires `email` and `password` in the body.
 
-Bookings
-POST /api/bookings
-Book an activity.
-Body: { activityId }
-Headers: Authorization: Bearer <token>
+---
 
-GET /api/bookings/my
-Get bookings for the logged-in user.
-Headers: Authorization: Bearer <token>
+### 🗓️ Activities
+
+- **GET** `/api/activities`  
+  Public endpoint to list all activities.  
+  Each activity includes: `id`, `title`, `description`, `location`, `dateTime`.
+
+- **POST** `/api/activities`  
+  (Protected) Creates a new activity.  
+  Requires a valid JWT token and the following in body:
+  - `title`
+  - `description` (minimum 10 characters)
+  - `location`
+  - `dateTime` (ISO 8601 format)
+
+---
+
+### 📌 Bookings
+
+- **POST** `/api/bookings`  
+  (Protected) Books an activity.  
+  Requires `activityId` in body and a valid JWT token in the header.
+
+- **GET** `/api/bookings/my`  
+  (Protected) Retrieves all bookings made by the currently logged-in user.
+
+---
+
+## 🧪 Postman Collection
+
+- A ready-to-use Postman collection is available in the `postman/` folder.
+- You can import it into Postman to test all endpoints quickly.
+- After login, copy your token and use it as a `Bearer` token in the headers.
+
+---
+
+## ✅ Sample Flow
+
+1. Register using `/api/auth/register`
+2. Login with `/api/auth/login` to receive a JWT token
+3. Use `/api/activities` to view activities
+4. Book an activity using `/api/bookings`
+5. View your bookings at `/api/bookings/my`
+
+---
+
+## 👨‍💻 Developed For
+
+**MeetX Internship Assignment**  
+by **Altrodav Technologies Pvt. Ltd.**
+
